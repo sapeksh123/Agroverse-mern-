@@ -3,6 +3,7 @@ const router = express.Router()
 const jwt = require("jsonwebtoken")
 const auth = require("../middleware/auth")
 const User = require("../models/User")
+const cookieParsar = require('cookie-parser');
 
 // @route   POST api/auth/login
 // @desc    Authenticate user & get token
@@ -34,6 +35,8 @@ router.post("/login", async (req, res) => {
     // Sign and return JWT
     jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "7d" }, (err, token) => {
       if (err) throw err
+      res.cookie('token', token, {httpOnly: true});
+
       res.json({ token })
     })
   } catch (err) {

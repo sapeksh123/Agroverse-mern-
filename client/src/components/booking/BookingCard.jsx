@@ -68,7 +68,7 @@ const BookingCard = ({ booking, onCancel, onApprove, onReject, isOwner }) => {
             <span className="text-sm text-gray-500">Booked on {formatDate(createdAt)}</span>
           </div>
           <div className="font-bold text-green-700 flex items-center">
-            <DollarSign size={16} className="mr-1" />
+           
             {formatCurrency(totalPrice)}
           </div>
         </div>

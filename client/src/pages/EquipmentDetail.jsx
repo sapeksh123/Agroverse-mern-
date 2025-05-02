@@ -65,11 +65,12 @@ const EquipmentDetail = () => {
         <div className="lg:col-span-2">
           <div className="bg-white rounded-lg shadow-md overflow-hidden">
             <div className="relative">
-              <img
-                src={equipment.image || "/placeholder.svg?height=400&width=800"}
-                alt={equipment.name}
-                className="w-full h-96 object-cover"
-              />
+            <img
+  src={`http://localhost:5000${equipment.image || "placeholder.svg?height=400&width=800"}`}
+  alt={equipment.name}
+  className="w-full h-96 object-cover"
+/>
+
               {!equipment.isAvailable && (
                 <div className="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold">
                   Not Available

@@ -144,17 +144,16 @@ const Dashboard = () => {
               </div>
             </div>
 
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <div className="flex items-center">
-                <div className="p-3 rounded-full bg-green-100 text-green-600 mr-4">
-                  <DollarSign className="h-6 w-6" />
-                </div>
-                <div>
-                  <p className="text-sm text-gray-600">Total Earnings</p>
-                  <p className="text-2xl font-semibold">${stats.totalEarnings.toFixed(2)}</p>
-                </div>
-              </div>
-            </div>
+            <div className="bg-white rounded-lg shadow-md p-6 flex items-center">
+  <div className="p-3 rounded-full bg-green-100 text-green-600 mr-4 w-12 h-12 flex items-center justify-center">
+    <span className="text-2xl">₹</span>
+  </div>
+  <div>
+    <p className="text-sm text-gray-600">Total Earnings</p>
+    <p className="text-2xl font-semibold">Rs {stats.totalEarnings.toFixed(2)}</p>
+  </div>
+</div>
+
           </>
         ) : (
           <>

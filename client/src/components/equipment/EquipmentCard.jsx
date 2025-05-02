@@ -8,7 +8,7 @@ const EquipmentCard = ({ equipment }) => {
   return (
     <div className="equipment-card card">
       <div className="relative">
-        <img src={image || "/placeholder.svg?height=200&width=300"} alt={name} className="w-full h-48 object-cover" />
+        <img src={`http://localhost:5000${image || "placeholder.svg?height=400&width=800"}`}alt={name} className="w-full h-48 object-cover" />
         {!isAvailable && (
           <div className="absolute top-0 right-0 bg-red-500 text-white px-2 py-1 text-xs font-bold">Not Available</div>
         )}

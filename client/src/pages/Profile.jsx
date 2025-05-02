@@ -36,6 +36,13 @@ const Profile = () => {
     }
   }, [user])
 
+  useEffect(() => {
+    if (success) {
+      const timer = setTimeout(() => setSuccess(null), 3000)
+      return () => clearTimeout(timer)
+    }
+  }, [success])
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -56,7 +63,7 @@ const Profile = () => {
       })
 
       setSuccess("Profile updated successfully")
-      loadUser() // Reload user data
+      loadUser()
     } catch (err) {
       setError(err.response?.data?.message || "Failed to update profile")
     } finally {
@@ -70,7 +77,6 @@ const Profile = () => {
     setError(null)
     setSuccess(null)
 
-    // Validate passwords
     if (formData.newPassword !== formData.confirmPassword) {
       setError("New passwords do not match")
       setLoading(false)
@@ -111,9 +117,9 @@ const Profile = () => {
       </div>
 
       <div className="bg-white rounded-lg shadow-md overflow-hidden">
-        <div className="flex border-b border-gray-200">
+        <div className="flex border-b border-gray-200 overflow-x-auto whitespace-nowrap no-scrollbar">
           <button
-            className={`px-4 py-3 text-sm font-medium ${
+            className={`px-6 py-3 text-sm font-medium transition ${
               activeTab === "profile"
                 ? "text-green-600 border-b-2 border-green-600"
                 : "text-gray-500 hover:text-gray-700"
@@ -123,7 +129,7 @@ const Profile = () => {
             Profile Information
           </button>
           <button
-            className={`px-4 py-3 text-sm font-medium ${
+            className={`px-6 py-3 text-sm font-medium transition ${
               activeTab === "password"
                 ? "text-green-600 border-b-2 border-green-600"
                 : "text-gray-500 hover:text-gray-700"
@@ -134,9 +140,9 @@ const Profile = () => {
           </button>
         </div>
 
-        <div className="p-6">
+        <div className="p-6 space-y-6">
           {error && (
-            <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-6">
+            <div className="bg-red-50 border-l-4 border-red-500 p-4">
               <div className="flex items-center">
                 <AlertCircle className="h-5 w-5 text-red-500 mr-2" />
                 <p className="text-red-700">{error}</p>
@@ -145,83 +151,81 @@ const Profile = () => {
           )}
 
           {success && (
-            <div className="bg-green-50 border-l-4 border-green-500 p-4 mb-6">
+            <div className="bg-green-50 border-l-4 border-green-500 p-4">
               <p className="text-green-700">{success}</p>
             </div>
           )}
 
           {activeTab === "profile" ? (
-            <form onSubmit={handleProfileSubmit}>
-              <div className="mb-6">
-                <div className="flex items-center mb-4">
-                  <div className="p-2 rounded-full bg-green-100 text-green-600 mr-3">
-                    <Shield className="h-6 w-6" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-gray-700">Account Type</p>
-                    <p className="text-sm text-gray-500">
-                      {user?.role === "farmer" ? "Farmer (Renter)" : "Equipment Owner"}
-                    </p>
-                  </div>
+            <form onSubmit={handleProfileSubmit} className="space-y-4">
+              <div className="flex items-center mb-4">
+                <div className="p-2 rounded-full bg-green-100 text-green-600 mr-3">
+                  <Shield className="h-6 w-6" />
                 </div>
-
-                <div className="mb-4">
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                    Full Name
-                  </label>
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <User className="h-5 w-5 text-gray-400" />
-                    </div>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      className="form-input pl-10"
-                      required
-                    />
-                  </div>
+                <div>
+                  <p className="text-sm font-medium text-gray-700">Account Type</p>
+                  <p className="text-sm text-gray-500">
+                    {user?.role === "farmer" ? "Farmer (Renter)" : "Equipment Owner"}
+                  </p>
                 </div>
+              </div>
 
-                <div className="mb-4">
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                    Email Address
-                  </label>
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <Mail className="h-5 w-5 text-gray-400" />
-                    </div>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      className="form-input pl-10 bg-gray-50"
-                      disabled
-                    />
+              <div>
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                  Full Name
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <User className="h-5 w-5 text-gray-400" />
                   </div>
-                  <p className="mt-1 text-xs text-gray-500">Email address cannot be changed</p>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 pl-10 focus:outline-none focus:ring-2 focus:ring-green-500"
+                    required
+                  />
                 </div>
+              </div>
 
-                <div className="mb-4">
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-                    Phone Number (Optional)
-                  </label>
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <Phone className="h-5 w-5 text-gray-400" />
-                    </div>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      className="form-input pl-10"
-                    />
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                  Email Address
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <Mail className="h-5 w-5 text-gray-400" />
                   </div>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    className="w-full border border-gray-200 rounded-md px-3 py-2 pl-10 bg-gray-50"
+                    disabled
+                  />
+                </div>
+                <p className="mt-1 text-xs text-gray-500">Email address cannot be changed</p>
+              </div>
+
+              <div>
+                <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+                  Phone Number (Optional)
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <Phone className="h-5 w-5 text-gray-400" />
+                  </div>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 pl-10 focus:outline-none focus:ring-2 focus:ring-green-500"
+                  />
                 </div>
               </div>
 
@@ -236,54 +240,52 @@ const Profile = () => {
               </div>
             </form>
           ) : (
-            <form onSubmit={handlePasswordSubmit}>
-              <div className="mb-6">
-                <div className="mb-4">
-                  <label htmlFor="currentPassword" className="block text-sm font-medium text-gray-700 mb-1">
-                    Current Password
-                  </label>
-                  <input
-                    type="password"
-                    id="currentPassword"
-                    name="currentPassword"
-                    value={formData.currentPassword}
-                    onChange={handleChange}
-                    className="form-input"
-                    required
-                  />
-                </div>
+            <form onSubmit={handlePasswordSubmit} className="space-y-4">
+              <div>
+                <label htmlFor="currentPassword" className="block text-sm font-medium text-gray-700 mb-1">
+                  Current Password
+                </label>
+                <input
+                  type="password"
+                  id="currentPassword"
+                  name="currentPassword"
+                  value={formData.currentPassword}
+                  onChange={handleChange}
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+                  required
+                />
+              </div>
 
-                <div className="mb-4">
-                  <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700 mb-1">
-                    New Password
-                  </label>
-                  <input
-                    type="password"
-                    id="newPassword"
-                    name="newPassword"
-                    value={formData.newPassword}
-                    onChange={handleChange}
-                    className="form-input"
-                    required
-                    minLength="6"
-                  />
-                  <p className="mt-1 text-xs text-gray-500">Password must be at least 6 characters</p>
-                </div>
+              <div>
+                <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700 mb-1">
+                  New Password
+                </label>
+                <input
+                  type="password"
+                  id="newPassword"
+                  name="newPassword"
+                  value={formData.newPassword}
+                  onChange={handleChange}
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+                  required
+                  minLength="6"
+                />
+                <p className="mt-1 text-xs text-gray-500">Password must be at least 6 characters</p>
+              </div>
 
-                <div className="mb-4">
-                  <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">
-                    Confirm New Password
-                  </label>
-                  <input
-                    type="password"
-                    id="confirmPassword"
-                    name="confirmPassword"
-                    value={formData.confirmPassword}
-                    onChange={handleChange}
-                    className="form-input"
-                    required
-                  />
-                </div>
+              <div>
+                <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">
+                  Confirm New Password
+                </label>
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+                  required
+                />
               </div>
 
               <div className="flex justify-end">

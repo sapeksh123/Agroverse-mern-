@@ -160,7 +160,7 @@ const MyEquipment = () => {
                       <div className="h-10 w-10 flex-shrink-0">
                         <img
                           className="h-10 w-10 rounded-full object-cover"
-                          src={item.image || "/placeholder.svg?height=40&width=40"}
+                          src={`http://localhost:5000${item.image || "placeholder.svg?height=400&width=800"}`}
                           alt={item.name}
                         />
                       </div>
@@ -176,7 +176,7 @@ const MyEquipment = () => {
                       {item.location}
                     </div>
                     <div className="text-sm text-gray-900 flex items-center">
-                      <DollarSign className="h-4 w-4 text-gray-500 mr-1" />
+                      
                       {formatCurrency(item.pricePerDay)}/day
                     </div>
                   </td>
