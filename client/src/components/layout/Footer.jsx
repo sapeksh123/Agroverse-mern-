@@ -68,15 +68,15 @@ const Footer = () => {
             <ul className="space-y-2">
               <li className="flex items-center text-green-100">
                 <MapPin size={18} className="mr-2" />
-                123 Farm Road, Rural District
+                Jabalpur , Madhya Pradesh 482004
               </li>
               <li className="flex items-center text-green-100">
                 <Phone size={18} className="mr-2" />
-                +1 (555) 123-4567
+                +91 9876543210
               </li>
               <li className="flex items-center text-green-100">
                 <Mail size={18} className="mr-2" />
-                info@agroverse.com
+                agroverse@gmail.com
               </li>
             </ul>
           </div>

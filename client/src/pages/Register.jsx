@@ -258,11 +258,11 @@ const Register = () => {
 
           <div className="text-sm text-center text-gray-600">
             By signing up, you agree to our{" "}
-            <a href="#" className="font-medium text-green-600 hover:text-green-500">
+            <a href="" className="font-medium text-green-600 hover:text-green-500">
               Terms of Service
             </a>{" "}
             and{" "}
-            <a href="#" className="font-medium text-green-600 hover:text-green-500">
+            <a href="" className="font-medium text-green-600 hover:text-green-500">
               Privacy Policy
             </a>
           </div>

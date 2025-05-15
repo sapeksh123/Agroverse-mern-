@@ -1,0 +1,39 @@
+/* Typing Animation Styles */
+@keyframes bounce1 {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes bounce2 {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+@keyframes bounce3 {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.typing-container .dot1 {
+  animation: bounce1 0.8s infinite ease-in-out;
+}
+
+.typing-container .dot2 {
+  animation: bounce2 0.8s infinite ease-in-out;
+}
+
+.typing-container .dot3 {
+  animation: bounce3 0.8s infinite ease-in-out;
+}

@@ -103,6 +103,9 @@ const Navbar = () => {
             >
               Equipment
             </Link>
+             <Link to="/chatbot" className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-green-600">
+             Agrobot
+            </Link>
             {isAuthenticated ? (
               <div className="relative group">
                 <button className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-green-600 focus:outline-none">

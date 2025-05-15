@@ -15,6 +15,8 @@ import MyEquipment from "./pages/MyEquipment"
 import Profile from "./pages/Profile"
 import NotFound from "./pages/NotFound"
 import "./App.css"
+import Chatbot from "./components/Chatbot/Chatbot"
+
 
 const App = () => {
   return (
@@ -28,6 +30,9 @@ const App = () => {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/equipment" element={<EquipmentListing />} />
+              <Route path="/chatbot" element={<Chatbot />} />
+            
+              
               <Route path="/equipment/:id" element={<EquipmentDetail />} />
               <Route
                 path="/dashboard"
@@ -35,6 +40,7 @@ const App = () => {
                   <PrivateRoute>
                     <Dashboard />
                   </PrivateRoute>
+           
                 }
               />
               <Route
