@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 import { AuthContext } from "../context/AuthContext"
 import axios from "axios"
 import { API_URL } from "../config"
-import { AlertCircle, Plus, Edit, Trash2, Eye, MapPin } from "lucide-react"
+import { AlertCircle, Plus, Edit, Trash2, Eye, MapPin, DollarSign } from "lucide-react"
 import { formatCurrency } from "../utils/format"
 
 const MyEquipment = () => {

@@ -61,7 +61,7 @@ router.get("/", async (req, res) => {
 // Get equipment by ID
 router.get("/:id", async (req, res) => {
   try {
-    const equipment = await Equipment.findById(req.params.id).populate("owner", "name");
+    const equipment = await Equipment.findById(req.params.id).populate("owner", "name phone" );
     if (!equipment) {
       return res.status(404).json({ message: "Equipment not found" });
     }
@@ -173,29 +173,28 @@ router.put("/:id/toggle-availability", auth, async (req, res) => {
 
 // Delete equipment (Owner only)
 router.delete("/:id", auth, async (req, res) => {
-  try {
-    const equipment = await Equipment.findById(req.params.id);
-    if (!equipment) {
-      return res.status(404).json({ message: "Equipment not found" });
-    }
+  const equipment = await Equipment.findById(req.params.id);
 
-    if (equipment.owner.toString() !== req.user.id) {
-      return res.status(403).json({ message: "Not authorized to delete this equipment" });
-    }
-
-    if (equipment.image) {
-      const imagePath = path.join(__dirname, "..", equipment.image);
-      if (fs.existsSync(imagePath)) {
-        fs.unlinkSync(imagePath);
-      }
-    }
-
-    await equipment.remove();
-    res.json({ message: "Equipment removed" });
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server error");
+  if (!equipment) {
+    return res.status(404).json({ message: "Equipment not found" });
   }
+  
+  if (equipment.owner.toString() !== req.user.id) {
+    return res.status(403).json({ message: "Not authorized to delete this equipment" });
+  }
+  
+  // Delete image if exists
+  if (equipment.image) {
+    const imagePath = path.join(__dirname, "..", equipment.image);
+    if (fs.existsSync(imagePath)) {
+      fs.unlinkSync(imagePath);
+    }
+  }
+  
+  await equipment.deleteOne(); // Or equipment.remove()
+  res.json({ message: "Equipment removed" });
+  
 });
+
 
 module.exports = router;
